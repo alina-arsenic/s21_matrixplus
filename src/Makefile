@@ -1,10 +1,12 @@
-SOURCE=*.cpp
+SOURCE=constructors.cpp operators.cpp utils.cpp
 
 all:
-	g++ $(SOURCE) -o app; ./app
+	g++ main.cpp $(SOURCE) -o app; ./app
 
 clean:
 
 test:
+	g++ test.cpp $(SOURCE) -o test -lgtest -lgmock -pthread
+	./test
 
 s21_matrix_oop.a:
