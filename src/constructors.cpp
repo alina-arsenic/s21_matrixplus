@@ -9,6 +9,9 @@ S21Matrix::S21Matrix() {
 
 // Параметризированный конструктор
 S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
+    if (rows <= 0 || cols <= 0) {
+        throw std::invalid_argument("Incorrect sizes of the matrix");
+    }
     matrix_ = new double[rows_ * cols_];
 }
 

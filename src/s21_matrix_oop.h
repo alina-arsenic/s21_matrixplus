@@ -13,11 +13,20 @@ private:
 
 public:
 
+    // constructors and destructors
     S21Matrix();
     S21Matrix(int rows, int cols);
     S21Matrix(const S21Matrix& other);
     S21Matrix(S21Matrix&& other);
     ~S21Matrix();
+
+    // accessors and mutators
+    int getRows();
+    int getCols();
+    void addRows(int n);
+    void addCols(int n);
+    void deleteRows(int n);
+    void deleteCols(int n);
 
     // operators overloads
     S21Matrix operator + (const S21Matrix& other);

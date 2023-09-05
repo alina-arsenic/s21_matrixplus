@@ -1,4 +1,4 @@
-SOURCE=constructors.cpp operators.cpp utils.cpp
+SOURCE=constructors.cpp mutators.cpp operators.cpp utils.cpp
 
 all:
 	g++ main.cpp $(SOURCE) -o app; ./app
