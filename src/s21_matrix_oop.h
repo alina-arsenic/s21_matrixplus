@@ -27,6 +27,7 @@ public:
     void addCols(int n);
     void deleteRows(int n);
     void deleteCols(int n);
+    void set(int i, int j, double value);
 
     // operators overloads
     S21Matrix operator + (const S21Matrix& other);

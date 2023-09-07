@@ -2,7 +2,7 @@
 
 // элемент по индексу
 double S21Matrix::operator () (int row, int col) {
-    if (row >= rows_ || col >= cols_) {
+    if (row >= rows_ || col >= cols_ || col < 0 || row < 0) {
         throw std::out_of_range("Incorrect input, index is out of range");
     }
     return matrix_[row * cols_ + col];
