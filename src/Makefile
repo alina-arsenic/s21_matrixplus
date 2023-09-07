@@ -1,4 +1,4 @@
-SOURCE=constructors.cpp mutators.cpp operators.cpp utils.cpp
+SOURCE=constructors.cpp mutators.cpp operators.cpp methods.cpp utils.cpp
 .PHONY: test
 
 all:
