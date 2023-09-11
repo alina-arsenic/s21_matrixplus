@@ -347,6 +347,182 @@ TEST(OperatorsTest, MultiplicationMatrixAssignment) {
 
 }
 
+TEST(MethodsTest, EqualityMethod) {
+  S21Matrix a, b;
+  a.Fill(); b.Fill();
+  ASSERT_TRUE(a.EqMatrix(b) == true);
+
+  S21Matrix c(3,4);
+  ASSERT_TRUE(a.EqMatrix(c) == false);
+
+  c.Fill();
+  c.deleteCols(1);
+  ASSERT_TRUE(a.EqMatrix(c) == false);
+}
+
+TEST(MethodsTest, AdditionMethod) {
+  S21Matrix a(3, 3);
+  a.Fill();
+  S21Matrix b(3, 2);
+  b.Fill();
+
+  int error = 0;
+  try {
+    a.SumMatrix(b);
+  } catch (exception& e) {
+    error = 1;
+  }
+  ASSERT_TRUE(error == 1);
+
+  b.addCols(1);
+  a.SumMatrix(b);
+
+  ASSERT_TRUE(a(0,0) == 0);
+  ASSERT_TRUE(a(0,1) == 2);
+  ASSERT_TRUE(a(0,2) == 2);
+  ASSERT_TRUE(a(1,0) == 5);
+  ASSERT_TRUE(a(1,1) == 7);
+  ASSERT_TRUE(a(1,2) == 5);
+  ASSERT_TRUE(a(2,0) == 10);
+  ASSERT_TRUE(a(2,1) == 12);
+  ASSERT_TRUE(a(2,2) == 8);
+
+}
+
+TEST(MethodsTest, SubtractionMethod) {
+  S21Matrix a(3, 1);
+  a.Fill();
+  S21Matrix b(3, 3);
+  b.Fill();
+
+  int error = 0;
+  try {
+    a.SubMatrix(b);
+  } catch (exception& e) {
+    error = 1;
+  }
+  ASSERT_TRUE(error == 1);
+
+  a.addCols(2);
+  a.SubMatrix(b);
+
+  ASSERT_TRUE(a(0,0) == 0);
+  ASSERT_TRUE(a(0,1) == -1);
+  ASSERT_TRUE(a(0,2) == -2);
+  ASSERT_TRUE(a(1,0) == -2);
+  ASSERT_TRUE(a(1,1) == -4);
+  ASSERT_TRUE(a(1,2) == -5);
+  ASSERT_TRUE(a(2,0) == -4);
+  ASSERT_TRUE(a(2,1) == -7);
+  ASSERT_TRUE(a(2,2) == -8);
+
+}
+
+TEST(MethodsTest, MultiplicationNumberMethod) {
+  S21Matrix a;
+  a.Fill();
+  a.MulNumber(3);
+
+  ASSERT_TRUE(a(0,0) == 0);
+  ASSERT_TRUE(a(0,1) == 3);
+  ASSERT_TRUE(a(0,2) == 6);
+  ASSERT_TRUE(a(1,0) == 9);
+  ASSERT_TRUE(a(1,1) == 12);
+  ASSERT_TRUE(a(1,2) == 15);
+  ASSERT_TRUE(a(2,0) == 18);
+  ASSERT_TRUE(a(2,1) == 21);
+  ASSERT_TRUE(a(2,2) == 24);
+
+}
+
+TEST(MethodsTest, MultiplicationMatrixMethod) {
+  S21Matrix a(3, 2);
+  a.Fill();
+  S21Matrix b(2, 3);
+  b.Fill();
+  a.MulMatrix(b);
+
+  ASSERT_TRUE(a(0,0) == 3);
+  ASSERT_TRUE(a(0,1) == 4);
+  ASSERT_TRUE(a(0,2) == 5);
+  ASSERT_TRUE(a(1,0) == 9);
+  ASSERT_TRUE(a(1,1) == 14);
+  ASSERT_TRUE(a(1,2) == 19);
+  ASSERT_TRUE(a(2,0) == 15);
+  ASSERT_TRUE(a(2,1) == 24);
+  ASSERT_TRUE(a(2,2) == 33);
+
+  S21Matrix d(2,5), e(4,3);
+  int error = 0;
+  try {
+    d.MulMatrix(e);
+  } catch (exception& e) {
+    error = 1;
+  }
+  ASSERT_TRUE(error == 1);
+
+}
+
+TEST(MethodsTest, Transpose) {
+  S21Matrix a(3,4);
+  a.Fill();
+  a.Transpose();
+  ASSERT_TRUE(a(0,0) == 0);
+  ASSERT_TRUE(a(0,1) == 4);
+  ASSERT_TRUE(a(0,2) == 8);
+  ASSERT_TRUE(a(1,0) == 1);
+  ASSERT_TRUE(a(1,1) == 5);
+  ASSERT_TRUE(a(1,2) == 9);
+  ASSERT_TRUE(a(2,0) == 2);
+  ASSERT_TRUE(a(2,1) == 6);
+  ASSERT_TRUE(a(2,2) == 10);
+  ASSERT_TRUE(a(3,0) == 3);
+  ASSERT_TRUE(a(3,1) == 7);
+  ASSERT_TRUE(a(3,2) == 11);
+
+}
+
+TEST(MethodsTest, CalcComplements) {
+  S21Matrix a;
+  a.Fill();
+  a.set(0,0, 10);
+  S21Matrix b = a.CalcComplements();
+  ASSERT_TRUE(b(0,0) == -3);
+  ASSERT_TRUE(b(0,1) == 6);
+  ASSERT_TRUE(b(0,2) == -3);
+  ASSERT_TRUE(b(1,0) == 6);
+  ASSERT_TRUE(b(1,1) == 68);
+  ASSERT_TRUE(b(1,2) == -64);
+  ASSERT_TRUE(b(2,0) == -3);
+  ASSERT_TRUE(b(2,1) == -44);
+  ASSERT_TRUE(b(2,2) == 37);
+}
+
+TEST(MethodsTest, Determinant) {
+  S21Matrix a;
+  a.Fill();
+  a.set(0,0, 10);
+  ASSERT_TRUE(a.Determinant() == -30);
+
+}
+
+TEST(MethodsTest, InverseMatrix) {
+  S21Matrix a;
+  a.Fill();
+  a.set(0,0, 10);
+  S21Matrix b = a.InverseMatrix();
+  ASSERT_TRUE(b(0,0) == (double)1/10);
+  ASSERT_TRUE(b(0,1) == (double)-1/5);
+  ASSERT_TRUE(b(0,2) == (double)1/10);
+  ASSERT_TRUE(b(1,0) == (double)-1/5);
+  ASSERT_TRUE(b(1,1) == (double)-34/15);
+  ASSERT_TRUE(b(1,2) == (double)22/15);
+  ASSERT_TRUE(b(2,0) == (double)1/10);
+  ASSERT_TRUE(b(2,1) == (double)32/15);
+  ASSERT_TRUE(b(2,2) == (double)-37/30);
+
+}
+
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

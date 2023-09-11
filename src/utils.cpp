@@ -3,7 +3,7 @@
 void S21Matrix::Print() {
     for (int i = 0; i < rows_; i++) {
         for (int j = 0; j < cols_; j++) {
-            std::cout << std::setw(4) << matrix_[i * cols_ + j];
+            std::cout << round(matrix_[i * cols_ + j] * pow(10, TOL_)) / pow(10, TOL_) << " ";
         }
         std::cout << "\n";
     }

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cstring>
+#include <cmath>
 
 class S21Matrix {
 private:
@@ -11,6 +12,8 @@ private:
     int rows_, cols_;
     double *matrix_;
 
+    // точность в знаках после запятой в результате подсчета определителя и при выводе матрицы
+    const int TOL_ = 8;
 public:
 
     // constructors and destructors
@@ -53,6 +56,8 @@ public:
     double Determinant();
     S21Matrix InverseMatrix();
 
+    int MakeTriangle();
+    S21Matrix Minor(int row, int col);
     void Print();
     void Fill();
 
